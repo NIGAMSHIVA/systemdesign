@@ -1,0 +1,38 @@
+1.Vertical Scaling means increasing the capacity of a single system by adding more resources like CPU, RAM, or storage.
+Horizontal Scaling means expanding the system by adding more machines or servers to share the load.Decoupling means separation of concerns — designing systems so that each
+component handles its own responsibility independently. For example, Zomato doesn’t care whether it’s a pizza or a burger; restaurants handle that part.Load Balancing is the
+process of distributing incoming requests across multiple servers so that no single server becomes overloaded.A Distributed System consists of multiple connected systems 
+working together, often spread across regions — like Facebook routing your request to the nearest local server for faster response.HLD (High-Level Design) focuses on how
+different systems or components interact — covering architecture, data flow, and communication.LLD (Low-Level Design) deals with the internal details of implementation — 
+classes, functions, and database structure.Extensibility means designing a system so that new features or components can be added easily without major changes to existing parts.
+
+2.Horizontal scaling → Add more servers → resilient, but adds latency and sync challenges.
+
+Vertical scaling → Upgrade one machine → consistent, but limited and risky if it fails.
+
+Cloud (AWS) → Enables both types of scaling easily and ensures uptime even if one node fails.
+
+3.When a system runs across multiple servers, we need to distribute load evenly.
+A common method is hashing, where we compute:
+
+serverIndex = hash(userID) % totalServers
+
+This ensures that the same user ID always maps to the same server, improving cache efficiency.
+However, if a server is added or removed, this simple hashing causes almost all keys to remap, which leads to cache loss and rebalancing issues.
+
+Consistent Hashing solves this by placing both servers and keys on a circular hash ring. Each key maps to the next server clockwise on the ring.
+When a server is added or removed, only a small portion of keys are remapped, keeping most cache data intact.
+
+4.A message queue is a system (like Kafka or RabbitMQ) that acts as a buffer between producers and consumers, ensuring reliable and asynchronous processing.
+ It stores incoming requests (like order messages) so that even if one server fails or restarts, no data is lost — other servers can pick up those messages later.
+
+5.A monolithic architecture means the entire application — frontend, backend, and database logic — exists as one single deployable unit. It’s simple and fast since there are no
+ network calls between modules, but any small change requires redeploying the whole app.A microservices architecture divides an application into multiple independent services,
+  each responsible for a specific domain. These services communicate over APIs, allowing independent development, deployment, and scaling. However, it introduces complexity due
+ to inter-service communication and data consistency challenges.Rule of thumb: start with a monolith when the team is small and requirements are evolving; migrate to
+  microservices when scalability and independent ownership become important.
+
+6.Database sharding is the process of horizontally partitioning a large database into smaller, independent parts called shards. Each shard stores a portion of the total data
+ (e.g., by region, customer ID, or hash). This reduces query time and distributes load across multiple servers.For example, Tinder may shard user data by city — Kanpur 
+ users in one shard, Delhi users in another — so searches are limited to local data. Sharding improves scalability and performance but adds complexity in joins and shard 
+ management.

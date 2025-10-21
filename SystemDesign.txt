@@ -36,3 +36,14 @@ When a server is added or removed, only a small portion of keys are remapped, ke
  (e.g., by region, customer ID, or hash). This reduces query time and distributes load across multiple servers.For example, Tinder may shard user data by city — Kanpur 
  users in one shard, Delhi users in another — so searches are limited to local data. Sharding improves scalability and performance but adds complexity in joins and shard 
  management.
+
+ 9.In NoSQL databases, data is stored in flexible formats like JSON or BSON. There are no foreign keys like in SQL; instead, related data can be stored inside a single document
+  as a nested object or array. This makes data retrieval faster because there’s no need for JOIN operations.NoSQL databases are schema-less, so you can easily add or remove 
+  fields without modifying the entire structure. Deleting or updating data is also easier and more flexible.In contrast, SQL databases use structured tables with fixed schemas.
+They support relationships using primary and foreign keys. But when complex JOIN operations are used, especially on large data, performance can become slow and costly.
+Also, modifying table structure is less flexible compared to NoSQL.
+
+10.Talking about the whatsapp architecture,How does the message go from user A to user B.When the user A send some message it go t the gateway and from that gateway it go the
+Routing+persence service which is holding the mapping of the user with their gatways and from that microservice it go to the B.BUt for that we need websockets because the request can onlu
+through the client to server and from the server to the client we will need this websockets.And if the status of the websockets is off then it will store the message in message
+queue(KAFKA) but when it is on it will display the message.
